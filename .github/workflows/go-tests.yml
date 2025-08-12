@@ -1,0 +1,29 @@
+name: Go Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Клонируем репозиторий
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Устанавливаем Go
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      # Запускаем тесты
+      - name: Run tests for all modules
+        run: |
+          set -e
+          for mod in $(find . -name go.mod -exec dirname {} \;); do
+            echo "=== Running tests in $mod ==="
+            (cd "$mod" && go test ./...)
+          done
