@@ -25,5 +25,5 @@ jobs:
           set -e
           for mod in $(find . -name go.mod -exec dirname {} \;); do
             echo "=== Running tests in $mod ==="
-            (cd "$mod" && go test -v ./...)
+            (cd "$mod" && go test ./...)
           done
